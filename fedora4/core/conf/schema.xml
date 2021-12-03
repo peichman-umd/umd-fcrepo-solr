@@ -175,7 +175,7 @@
       <tokenizer class="solr.KeywordTokenizerFactory"/>
       <charFilter
             class="solr.PatternReplaceCharFilterFactory"
-            pattern="\ \(College\ Park.*"
+            pattern="\ \(\[?College\ Park.*"
             replacement="" />
     </analyzer>
   </fieldType>
