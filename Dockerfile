@@ -5,7 +5,7 @@
 # docker build -t docker.lib.umd.edu/fcrepo-solr-fedora4:<VERSION> -f Dockerfile .
 #
 # where <VERSION> is the Docker image version to create.
-FROM solr:6.6.6-slim
+FROM solr:7.7.3-slim
 USER root
 COPY --chown=solr:solr fedora4/solr.in.sh /opt/solr/bin/
 COPY --chown=solr:solr fedora4/core /opt/solr/server/solr/mycores/fedora4/
