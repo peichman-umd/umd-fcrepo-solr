@@ -199,7 +199,7 @@ function setObjectComponent(doc, pcdm_type) {
   // see https://issues.umd.edu/browse/LIBFCREPO-994
   // and https://issues.umd.edu/browse/LIBHYDRA-421
   if (hasValue(doc, SOLR_COMPONENT) && rdf_types.indexOf('bibo:Letter') == -1) {
-    logger.debug(SOLR_COMPONENT + ' field already set to "' + doc.getFieldValue(SOLR_COMPONENT) + '"; skipping rdf:typescan');
+    logger.debug(SOLR_COMPONENT + ' field already set to "' + doc.getFieldValue(SOLR_COMPONENT) + '"; skipping rdf:type scan');
     return;
   }
   var component = "";
@@ -264,6 +264,11 @@ function parseDateField(doc) {
   if (date_array.length > 0) {
     // display date is the value straight from the repo
     var display_date = date_array[0];
+    // remove the date field from solr indexing and return if it is blank
+    if (display_date == '') {
+      doc.remove(DATE_FIELD);
+      return;
+    }
     // remove "[", "]", and ".." from before/after dates
     // then take only the first date in a comma-delimited range
     var sort_date = display_date.replace(/[\[\]]/g, '').replace(/^\.\.|\.\.$/, '').replace(/,.*/, '');
