@@ -280,8 +280,8 @@ function parseDateField(doc) {
       iso_date += '-01';
     }
     iso_date += 'T00:00:00Z';
-    var yyyy = matches[1];
-    var mm = matches[2];
+    var yyyy = iso_date.substr(0, 4);
+    var mm = iso_date.substr(5, 2);
     doc.setField(DATE_FIELD, iso_date);
     doc.setField(SOLR_DISPLAY_DATE, display_date);
     doc.setField(SOLR_SORT_DATE, sort_date);
