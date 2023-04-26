@@ -1,2 +1,8 @@
 .dockerignore
-../Dockerfile
+.gitignore
+.pytest_cache
+.python-version
+.venv
+Dockerfile
+requirements.txt
+tests
