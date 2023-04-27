@@ -287,14 +287,26 @@ function parseDateField(doc) {
       .replace(/^(\d\d)XX/, '$100')
       .replace(/^(\d)XXX/, '$1000')
       .match(/^(\d\d\d\d)(?:-(\d\d)(?:-(\d\d))?)?/);
-    var iso_date = matches[0];
-    // pad the ISO date until it is fully specified
-    while (iso_date.length < 10) {
-      iso_date += '-01';
+    var yyyy = matches[1];
+    // default to '01' for month and day
+    var mm = matches[2] || '01';
+    var dd = matches[3] || '01';
+
+    // check for EDTF pseudo-months outside of the normal 1-12 range
+    var mm_number = parseInt(mm);
+    if (mm_number >= 21 && mm_number <= 24) {
+      // these are "season" pseudo-months
+      // rewrite to align with the first day of the month traditionally
+      // associated with the start of that season
+      // mapping:
+      // 21 (Spring) --> 03 (March)
+      // 22 (Summer) --> 06 (June)
+      // 23 (Autumn) --> 09 (September)
+      // 24 (Winter) --> 12 (December)
+      var calendar_month = (mm_number - 20) * 3;
+      mm = ('00' + calendar_month).slice(-2);
     }
-    iso_date += 'T00:00:00Z';
-    var yyyy = iso_date.substr(0, 4);
-    var mm = iso_date.substr(5, 2);
+    var iso_date = yyyy + '-' + mm + '-' + dd + 'T00:00:00Z';
     doc.setField(DATE_FIELD, iso_date);
     doc.setField(SOLR_DISPLAY_DATE, display_date);
     doc.setField(SOLR_SORT_DATE, sort_date);
