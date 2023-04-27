@@ -187,3 +187,22 @@ def test_date_field_set(solr, input_date, output_date):
     uuid, results = _index_doc(solr, {'date': input_date})
     assert results.docs[0]['date'] == output_date
     _cleanup(solr, uuid)
+
+
+@pytest.mark.parametrize(
+    ('input_date', 'output_date'),
+    [
+        # Spring --> March 1
+        ('2012-21', '2012-03-01T00:00:00Z'),
+        # Summer --> June 1
+        ('2012-22', '2012-06-01T00:00:00Z'),
+        # Autumn --> September 1
+        ('2012-23', '2012-09-01T00:00:00Z'),
+        # Winter --> December 1
+        ('2012-24', '2012-12-01T00:00:00Z'),
+    ]
+)
+def test_date_field_seasons(solr, input_date, output_date):
+    uuid, results = _index_doc(solr, {'date': input_date})
+    assert results.docs[0]['date'] == output_date
+    _cleanup(solr, uuid)
