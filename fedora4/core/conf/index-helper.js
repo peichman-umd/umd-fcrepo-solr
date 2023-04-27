@@ -269,19 +269,32 @@ function parseDateField(doc) {
       doc.remove(DATE_FIELD);
       return;
     }
-    // remove "[", "]", and ".." from before/after dates
+    // remove "[", "]", and "../" or "/.." from before/after dates
     // then take only the first date in a comma-delimited range
-    var sort_date = display_date.replace(/[\[\]]/g, '').replace(/^\.\.|\.\.$/, '').replace(/,.*/, '');
-    // look for YYYY[-MM[-DD]] ISO date and extract
-    var matches = sort_date.match(/^(\d\d\d\d)(?:-(\d\d)(?:-(\d\d))?)?/);
+    var sort_date = display_date
+      .replace(/[\[\]]/g, '')
+      .replace(/^\.\.|\.\.$/, '')
+      .replace(/^[/]|[/]$/, '')
+      .replace(/,.*/, '');
+    // strip approximation and uncertainty markers,
+    // replace any unspecified digits with the smallest replacement,
+    // then look for YYYY[-MM[-DD]] ISO date and extract it
+    var matches = sort_date
+      .replace(/[~?%]/g, '')
+      .replace(/-[0X]X/g, '-01')
+      .replace(/-([123])X/g, '-$10')
+      .replace(/^(\d\d\d)X/, '$10')
+      .replace(/^(\d\d)XX/, '$100')
+      .replace(/^(\d)XXX/, '$1000')
+      .match(/^(\d\d\d\d)(?:-(\d\d)(?:-(\d\d))?)?/);
     var iso_date = matches[0];
     // pad the ISO date until it is fully specified
     while (iso_date.length < 10) {
       iso_date += '-01';
     }
     iso_date += 'T00:00:00Z';
-    var yyyy = matches[1];
-    var mm = matches[2];
+    var yyyy = iso_date.substr(0, 4);
+    var mm = iso_date.substr(5, 2);
     doc.setField(DATE_FIELD, iso_date);
     doc.setField(SOLR_DISPLAY_DATE, display_date);
     doc.setField(SOLR_SORT_DATE, sort_date);
