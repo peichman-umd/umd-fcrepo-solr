@@ -1,32 +1,4 @@
-import os
-from uuid import uuid4
-
 import pytest
-from pysolr import Solr
-
-
-def _index_doc(solr, doc):
-    uuid = str(uuid4())
-    solr.add([{'id': uuid, **doc}])
-    solr.commit()
-    results = solr.search(f'id:{uuid}')
-    return uuid, results
-
-
-def _cleanup(solr, uuid):
-    # clean up after ourselves
-    solr.delete(id=uuid)
-    solr.commit()
-
-
-@pytest.fixture()
-def solr_endpoint():
-    return os.environ.get('SOLR_ENDPOINT', 'http://localhost:8983/solr/fedora4')
-
-
-@pytest.fixture()
-def solr(solr_endpoint):
-    return Solr(solr_endpoint)
 
 
 @pytest.mark.parametrize(
@@ -44,10 +16,9 @@ def solr(solr_endpoint):
         ('2XXX', '2000-01-01T00:00:00Z'),
     ]
 )
-def test_date_field_year_only(solr, input_date, output_date):
-    uuid, results = _index_doc(solr, {'date': input_date})
-    assert results.docs[0]['date'] == output_date
-    _cleanup(solr, uuid)
+def test_date_field_year_only(index, input_date, output_date):
+    doc = index({'date': input_date})
+    assert doc['date'] == output_date
 
 
 @pytest.mark.parametrize(
@@ -76,10 +47,9 @@ def test_date_field_year_only(solr, input_date, output_date):
         ('2XXX-1X', '2000-10-01T00:00:00Z'),
     ]
 )
-def test_date_field_year_month(solr, input_date, output_date):
-    uuid, results = _index_doc(solr, {'date': input_date})
-    assert results.docs[0]['date'] == output_date
-    _cleanup(solr, uuid)
+def test_date_field_year_month(index, input_date, output_date):
+    doc = index({'date': input_date})
+    assert doc['date'] == output_date
 
 
 @pytest.mark.parametrize(
@@ -154,10 +124,9 @@ def test_date_field_year_month(solr, input_date, output_date):
         ('2XXX-1X-3X', '2000-10-30T00:00:00Z'),
     ]
 )
-def test_date_field_year_month_day(solr, input_date, output_date):
-    uuid, results = _index_doc(solr, {'date': input_date})
-    assert results.docs[0]['date'] == output_date
-    _cleanup(solr, uuid)
+def test_date_field_year_month_day(index, input_date, output_date):
+    doc = index({'date': input_date})
+    assert doc['date'] == output_date
 
 
 @pytest.mark.parametrize(
@@ -169,10 +138,9 @@ def test_date_field_year_month_day(solr, input_date, output_date):
         ('../2012', '2012-01-01T00:00:00Z'),
     ]
 )
-def test_date_field_interval(solr, input_date, output_date):
-    uuid, results = _index_doc(solr, {'date': input_date})
-    assert results.docs[0]['date'] == output_date
-    _cleanup(solr, uuid)
+def test_date_field_interval(index, input_date, output_date):
+    doc = index({'date': input_date})
+    assert doc['date'] == output_date
 
 
 @pytest.mark.parametrize(
@@ -183,10 +151,9 @@ def test_date_field_interval(solr, input_date, output_date):
         ('[..2012]', '2012-01-01T00:00:00Z'),
     ]
 )
-def test_date_field_set(solr, input_date, output_date):
-    uuid, results = _index_doc(solr, {'date': input_date})
-    assert results.docs[0]['date'] == output_date
-    _cleanup(solr, uuid)
+def test_date_field_set(index, input_date, output_date):
+    doc = index({'date': input_date})
+    assert doc['date'] == output_date
 
 
 @pytest.mark.parametrize(
@@ -202,7 +169,6 @@ def test_date_field_set(solr, input_date, output_date):
         ('2012-24', '2012-12-01T00:00:00Z'),
     ]
 )
-def test_date_field_seasons(solr, input_date, output_date):
-    uuid, results = _index_doc(solr, {'date': input_date})
-    assert results.docs[0]['date'] == output_date
-    _cleanup(solr, uuid)
+def test_date_field_seasons(index, input_date, output_date):
+    doc = index({'date': input_date})
+    assert doc['date'] == output_date

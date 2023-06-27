@@ -45,6 +45,7 @@
   <field name="recipient_with_uri" type="uri_tagged_text" indexed="true" stored="true" multiValued="true"/>
   <field name="author_with_uri" type="uri_tagged_text" indexed="true" stored="true" multiValued="true"/>
   <field name="identifier" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="handle" type="string" indexed="true" stored="true" multiValued="false"/>
 
   <!-- Multilingual fields -->
 

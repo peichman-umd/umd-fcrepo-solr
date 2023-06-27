@@ -63,6 +63,7 @@ var PCDM_FILES_FIELD = "pcdm_files";
 var ANNOTATION_SOURCE_FIELD = "annotation_source";
 var ANNOTATION_TARGET_FIELD = "annotation_target";
 var GENRE_FIELD = "genre";
+var HANDLE_FIELD = "handle";
 
 // SOLR FIELDS
 var SOLR_OBJECT_TYPE = "object_type";
@@ -100,6 +101,7 @@ function processAdd(cmd) {
     setExtractedTextSource(doc);
   }
   removeURIGenreValues(doc);
+  removeHDLPrefix(doc);
 
   logger.debug("update-script#processAdd: updated keys=" + doc.keySet());
 }
@@ -359,5 +361,13 @@ function removeURIGenreValues(doc) {
     if (!(genre[i].startsWith('http://') || genre[i].startsWith('https://'))) {
       doc.addField(GENRE_FIELD, genre[i]);
     }
+  }
+}
+
+// remove the "hdl:" URI prefix from the handle field value
+function removeHDLPrefix(doc) {
+  if (hasValue(doc, HANDLE_FIELD)) {
+    var handle = doc.getFieldValue(HANDLE_FIELD);
+    doc.setField(HANDLE_FIELD, handle.replace(/^hdl:/, ""));
   }
 }
