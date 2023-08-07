@@ -63,6 +63,7 @@ var PCDM_FILES_FIELD = "pcdm_files";
 var ANNOTATION_SOURCE_FIELD = "annotation_source";
 var ANNOTATION_TARGET_FIELD = "annotation_target";
 var GENRE_FIELD = "genre";
+var HANDLE_FIELD = "handle";
 
 // SOLR FIELDS
 var SOLR_OBJECT_TYPE = "object_type";
@@ -100,6 +101,7 @@ function processAdd(cmd) {
     setExtractedTextSource(doc);
   }
   removeURIGenreValues(doc);
+  removeHDLPrefix(doc);
 
   logger.debug("update-script#processAdd: updated keys=" + doc.keySet());
 }
@@ -269,19 +271,44 @@ function parseDateField(doc) {
       doc.remove(DATE_FIELD);
       return;
     }
-    // remove "[", "]", and ".." from before/after dates
+    // remove "[", "]", and "../" or "/.." from before/after dates
     // then take only the first date in a comma-delimited range
-    var sort_date = display_date.replace(/[\[\]]/g, '').replace(/^\.\.|\.\.$/, '').replace(/,.*/, '');
-    // look for YYYY[-MM[-DD]] ISO date and extract
-    var matches = sort_date.match(/^(\d\d\d\d)(?:-(\d\d)(?:-(\d\d))?)?/);
-    var iso_date = matches[0];
-    // pad the ISO date until it is fully specified
-    while (iso_date.length < 10) {
-      iso_date += '-01';
-    }
-    iso_date += 'T00:00:00Z';
+    var sort_date = display_date
+      .replace(/[\[\]]/g, '')
+      .replace(/^\.\.|\.\.$/, '')
+      .replace(/^[/]|[/]$/, '')
+      .replace(/,.*/, '');
+    // strip approximation and uncertainty markers,
+    // replace any unspecified digits with the smallest replacement,
+    // then look for YYYY[-MM[-DD]] ISO date and extract it
+    var matches = sort_date
+      .replace(/[~?%]/g, '')
+      .replace(/-[0X]X/g, '-01')
+      .replace(/-([123])X/g, '-$10')
+      .replace(/^(\d\d\d)X/, '$10')
+      .replace(/^(\d\d)XX/, '$100')
+      .replace(/^(\d)XXX/, '$1000')
+      .match(/^(\d\d\d\d)(?:-(\d\d)(?:-(\d\d))?)?/);
     var yyyy = matches[1];
-    var mm = matches[2];
+    // default to '01' for month and day
+    var mm = matches[2] || '01';
+    var dd = matches[3] || '01';
+
+    // check for EDTF pseudo-months outside of the normal 1-12 range
+    var mm_number = parseInt(mm);
+    if (mm_number >= 21 && mm_number <= 24) {
+      // these are "season" pseudo-months
+      // rewrite to align with the first day of the month traditionally
+      // associated with the start of that season
+      // mapping:
+      // 21 (Spring) --> 03 (March)
+      // 22 (Summer) --> 06 (June)
+      // 23 (Autumn) --> 09 (September)
+      // 24 (Winter) --> 12 (December)
+      var calendar_month = (mm_number - 20) * 3;
+      mm = ('00' + calendar_month).slice(-2);
+    }
+    var iso_date = yyyy + '-' + mm + '-' + dd + 'T00:00:00Z';
     doc.setField(DATE_FIELD, iso_date);
     doc.setField(SOLR_DISPLAY_DATE, display_date);
     doc.setField(SOLR_SORT_DATE, sort_date);
@@ -334,5 +361,13 @@ function removeURIGenreValues(doc) {
     if (!(genre[i].startsWith('http://') || genre[i].startsWith('https://'))) {
       doc.addField(GENRE_FIELD, genre[i]);
     }
+  }
+}
+
+// remove the "hdl:" URI prefix from the handle field value
+function removeHDLPrefix(doc) {
+  if (hasValue(doc, HANDLE_FIELD)) {
+    var handle = doc.getFieldValue(HANDLE_FIELD);
+    doc.setField(HANDLE_FIELD, handle.replace(/^hdl:/, ""));
   }
 }
