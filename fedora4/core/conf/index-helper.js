@@ -12,6 +12,9 @@ var PCDM_COLLECTION = "pcdm:Collection";
 var PCDM_OBJECT = "pcdm:Object";
 var PCDM_FILE = "pcdm:File";
 var OA_ANNOTATION = "oa:Annotation";
+var UMDACCESS_PUBLISHED = "umdaccess:Published";
+var UMDACCESS_HIDDEN = "umdaccess:Hidden";
+var UMD_TOP_LEVEL_PREFIX = "umd:";
 
 var ONTOLOGY_MAPPING = {
   "http://fedora.info/definitions/v4/repository#": "fedora:",
@@ -26,7 +29,8 @@ var ONTOLOGY_MAPPING = {
   "http://purl.org/spar/fabio/": "fabio:",
   "http://www.w3.org/ns/oa#": "oa:",
   "http://www.shared-canvas.org/ns/painting": "sc:",
-  "http://vocab.lib.umd.edu/access#": "umdaccess:"
+  "http://vocab.lib.umd.edu/access#": "umdaccess:",
+  "http://vocab.lib.umd.edu/model#": "umd:"
 }
 
 // shortened RDF type => component label
@@ -78,6 +82,10 @@ var SOLR_DATE_DECADE = "date_decade";
 var SOLR_DATE_YEAR = "date_year";
 var SOLR_DATE_MONTH = "date_month";
 var SOLR_EXTRACTED_TEXT_SOURCE = "extracted_text_source";
+var SOLR_IS_PUBLISHED = "is_published";
+var SOLR_IS_HIDDEN = "is_hidden";
+var SOLR_IS_TOP_LEVEL = "is_top_level";
+var SOLR_IS_DISCOVERABLE = "is_discoverable";
 
 var MONTHS = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
@@ -102,6 +110,7 @@ function processAdd(cmd) {
   }
   removeURIGenreValues(doc);
   removeHDLPrefix(doc);
+  setPublicationAndDiscoveryStatusFields(doc);
 
   logger.debug("update-script#processAdd: updated keys=" + doc.keySet());
 }
@@ -370,4 +379,29 @@ function removeHDLPrefix(doc) {
     var handle = doc.getFieldValue(HANDLE_FIELD);
     doc.setField(HANDLE_FIELD, handle.replace(/^hdl:/, ""));
   }
+}
+
+function setPublicationAndDiscoveryStatusFields(doc) {
+  var is_published = false;
+  var is_hidden = false;
+  var is_top_level = false;
+
+  var rdf_types = getValueArray(doc, RDF_FIELD);
+  for (var i = 0; i < rdf_types.length; i++) {
+    if (rdf_types[i] == UMDACCESS_PUBLISHED) {
+      is_published = true;
+    }
+    if (rdf_types[i] == UMDACCESS_HIDDEN) {
+      is_hidden = true;
+    }
+    if (rdf_types[i].startsWith(UMD_TOP_LEVEL_PREFIX)) {
+      is_top_level = true;
+    }
+  }
+  doc.setField(SOLR_IS_PUBLISHED, is_published);
+  doc.setField(SOLR_IS_HIDDEN, is_hidden);
+  doc.setField(SOLR_IS_TOP_LEVEL, is_top_level);
+
+  var is_discoverable = is_top_level && is_published && !is_hidden;
+  doc.setField(SOLR_IS_DISCOVERABLE, is_discoverable);
 }
