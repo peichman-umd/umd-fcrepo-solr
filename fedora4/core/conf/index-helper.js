@@ -86,6 +86,8 @@ var SOLR_IS_PUBLISHED = "is_published";
 var SOLR_IS_HIDDEN = "is_hidden";
 var SOLR_IS_TOP_LEVEL = "is_top_level";
 var SOLR_IS_DISCOVERABLE = "is_discoverable";
+var SOLR_PUBLICATION_STATUS = "publication_status";
+var SOLR_VISIBILITY = "visibility";
 
 var MONTHS = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
@@ -385,14 +387,19 @@ function setPublicationAndDiscoveryStatusFields(doc) {
   var is_published = false;
   var is_hidden = false;
   var is_top_level = false;
+  // facet fields
+  var publication_status = 'Unpublished';
+  var visibility = 'Visible';
 
   var rdf_types = getValueArray(doc, RDF_FIELD);
   for (var i = 0; i < rdf_types.length; i++) {
     if (rdf_types[i] == UMDACCESS_PUBLISHED) {
       is_published = true;
+      publication_status = 'Published';
     }
     if (rdf_types[i] == UMDACCESS_HIDDEN) {
       is_hidden = true;
+      visibility = 'Hidden';
     }
     if (rdf_types[i].startsWith(UMD_TOP_LEVEL_PREFIX)) {
       is_top_level = true;
@@ -401,6 +408,9 @@ function setPublicationAndDiscoveryStatusFields(doc) {
   doc.setField(SOLR_IS_PUBLISHED, is_published);
   doc.setField(SOLR_IS_HIDDEN, is_hidden);
   doc.setField(SOLR_IS_TOP_LEVEL, is_top_level);
+  // facet fields
+  doc.setField(SOLR_PUBLICATION_STATUS, publication_status);
+  doc.setField(SOLR_VISIBILITY, visibility);
 
   var is_discoverable = is_top_level && is_published && !is_hidden;
   doc.setField(SOLR_IS_DISCOVERABLE, is_discoverable);
