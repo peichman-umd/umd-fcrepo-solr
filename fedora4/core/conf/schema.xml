@@ -103,6 +103,8 @@
   <field name="recipient_not_tokenized" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="location_not_tokenized" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="collection_title_facet" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="publication_status" type="string" indexed="true" stored="true" multiValued="false"/>
+  <field name="visibility" type="string" indexed="true" stored="true" multiValued="false"/>
 
   <!-- Annotation Fields -->
   <field name="annotation_source" type="string" indexed="true" stored="true" multiValued="true"/>
