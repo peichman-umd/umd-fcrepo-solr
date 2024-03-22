@@ -105,7 +105,7 @@
   <field name="collection_title_facet" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="publication_status" type="string" indexed="true" stored="true" multiValued="false"/>
   <field name="visibility" type="string" indexed="true" stored="true" multiValued="false"/>
-  <field name="presentation_set_label" type="string" indexed="false" stored="false" multiValued="true" docValues="true" useDocValuesAsStored="true"/>
+  <field name="presentation_set_label" type="string" indexed="true" stored="false" multiValued="true" docValues="true" useDocValuesAsStored="true"/>
 
   <!-- Annotation Fields -->
   <field name="annotation_source" type="string" indexed="true" stored="true" multiValued="true"/>
