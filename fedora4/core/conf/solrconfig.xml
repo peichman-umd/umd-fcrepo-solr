@@ -922,6 +922,22 @@
     </lst>
   </requestHandler>
 
+  <!-- A request handler that for searching identifiers\ from blacklight -->
+  <requestHandler name="/identifier_search" class="solr.SearchHandler" >
+    <lst name="defaults">
+      <str name="echoParams">explicit</str>
+      <!-- list fields to be returned in the "fl" param -->
+      <str name="fl">*,score,annotation_source_info:[subquery]</str>
+
+      <str name="facet">on</str>
+      <str name="facet.mincount">1</str>
+      <str name="facet.limit">10</str>
+      <str name="rows">1</str>
+      <str name="df">identifier</str>
+      <str name="facet.mincount">1</str>
+    </lst>
+  </requestHandler>
+
   <!-- A request handler that for retrieving single documents from blacklight -->
   <requestHandler name="/document" class="solr.SearchHandler">
     <lst name="defaults">
