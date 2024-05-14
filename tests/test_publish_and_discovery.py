@@ -24,10 +24,10 @@ def test_publish_and_discovery_flags(index, rdf_types, is_published, is_top_leve
 
 
 def test_only_top_level_have_flags(index):
-    # Not top-level, should not have the "is_*" flags
+    # Not top-level, should not have the "is_*" flags other than "is_top_level:false"
     doc = index({})
+    assert not doc['is_top_level']
     assert 'is_published' not in doc
-    assert 'is_top_level' not in doc
     assert 'is_hidden' not in doc
     assert 'is_discoverable' not in doc
 
