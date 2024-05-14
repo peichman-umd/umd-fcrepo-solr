@@ -7,8 +7,6 @@ hidden_type = 'http://vocab.lib.umd.edu/access#Hidden'
 @pytest.mark.parametrize(
     ('rdf_types', 'is_published', 'is_top_level', 'is_hidden', 'is_discoverable'),
     [
-        # Published, but not top-level or hidden
-        ([published_type], True, False, False, False),
         # Top level, but not published or hidden
         ([top_level_type], False, True, False, False),
         # Published and top-level, but not hidden, so discoverable
@@ -25,13 +23,22 @@ def test_publish_and_discovery_flags(index, rdf_types, is_published, is_top_leve
     assert doc['is_discoverable'] == is_discoverable
 
 
+def test_only_top_level_have_flags(index):
+    # Not top-level, should not have the "is_*" flags other than "is_top_level:false"
+    doc = index({})
+    assert not doc['is_top_level']
+    assert 'is_published' not in doc
+    assert 'is_hidden' not in doc
+    assert 'is_discoverable' not in doc
+
+
 @pytest.mark.parametrize(
     ('rdf_types', 'publication_status', 'visibility'),
     [
-        ([], 'Unpublished', 'Visible'),
-        ([published_type], 'Published', 'Visible'),
-        ([hidden_type], 'Unpublished', 'Hidden'),
-        ([published_type, hidden_type], 'Published', 'Hidden'),
+        ([top_level_type], 'Unpublished', 'Visible'),
+        ([top_level_type, published_type], 'Published', 'Visible'),
+        ([top_level_type, hidden_type], 'Unpublished', 'Hidden'),
+        ([top_level_type, published_type, hidden_type], 'Published', 'Hidden'),
     ]
 )
 def test_publish_and_discovery_facets(index, rdf_types, publication_status, visibility):

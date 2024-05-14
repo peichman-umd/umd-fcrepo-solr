@@ -405,13 +405,15 @@ function setPublicationAndDiscoveryStatusFields(doc) {
       is_top_level = true;
     }
   }
-  doc.setField(SOLR_IS_PUBLISHED, is_published);
-  doc.setField(SOLR_IS_HIDDEN, is_hidden);
   doc.setField(SOLR_IS_TOP_LEVEL, is_top_level);
-  // facet fields
-  doc.setField(SOLR_PUBLICATION_STATUS, publication_status);
-  doc.setField(SOLR_VISIBILITY, visibility);
+  if (is_top_level) {
+    doc.setField(SOLR_IS_PUBLISHED, is_published);
+    doc.setField(SOLR_IS_HIDDEN, is_hidden);
+    // facet fields
+    doc.setField(SOLR_PUBLICATION_STATUS, publication_status);
+    doc.setField(SOLR_VISIBILITY, visibility);
 
-  var is_discoverable = is_top_level && is_published && !is_hidden;
-  doc.setField(SOLR_IS_DISCOVERABLE, is_discoverable);
+    var is_discoverable = is_top_level && is_published && !is_hidden;
+    doc.setField(SOLR_IS_DISCOVERABLE, is_discoverable);
+  }
 }
