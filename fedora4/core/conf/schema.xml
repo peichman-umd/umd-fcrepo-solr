@@ -38,6 +38,7 @@
   <field name="genre" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="subject" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="rights" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="copyright_notice" type="text_general" indexed="true" stored="true" multiValued="false"/>
   <field name="collection" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="citation" type="text_general" indexed="true" stored="true" multiValued="true"/>
   <field name="description" type="text_general" indexed="true" stored="true" multiValued="true"/>
