@@ -1,4 +1,4 @@
-# umd-fcrepo-solr
+# umd-fcrepo-solr: fedora4 core
 
 UMD Libraries Solr Index for Fedora (fedora4 core)
 
@@ -26,6 +26,13 @@ version 7.7.3.
 | 8983        | Solr web admin interface |
 
 ### Build
+
+Clone the [umd-fcrepo-solr] repository and switch to the `fedora4` directory:
+
+```zsh
+git clone git@github.com:umd-lib/umd-fcrepo-solr.git
+cd umd-fcrepo-solr/fedora4
+```
 
 Build the image:
 
@@ -81,9 +88,10 @@ subdirectory of the [umd-fcrepo-docker] project at the 1.0.1 release.
 
 ## License
 
-See the [LICENSE](LICENSE) file for license rights and limitations (Apache 2.0).
+See the [LICENSE](../LICENSE) file for license rights and limitations (Apache 2.0).
 
 
 [Solr]: https://solr.apache.org/
+[umd-fcrepo-solr]: https://github.com/umd-lib/umd-fcrepo-solr
 [umd-fcrepo-docker]: https://github.com/umd-lib/umd-fcrepo-docker
 [pytest]: https://pypi.org/project/pytest/
