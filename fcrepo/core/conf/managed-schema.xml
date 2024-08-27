@@ -520,4 +520,6 @@
   <dynamicField name="*_dps" type="delimited_payloads_string" indexed="true" stored="true"/>
   <dynamicField name="*_ws" type="text_ws" indexed="true" stored="true"/>
   <dynamicField name="*_p" type="location" indexed="true" stored="true"/>
+
+  <dynamicField name="is_*" type="boolean" indexed="true" stored="true"/>
 </schema>
