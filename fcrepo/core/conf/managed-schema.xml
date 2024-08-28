@@ -522,4 +522,5 @@
   <dynamicField name="*_p" type="location" indexed="true" stored="true"/>
 
   <dynamicField name="is_*" type="boolean" indexed="true" stored="true"/>
+  <dynamicField name="*__sequence" type="strings" indexed="true" stored="true"/>
 </schema>
