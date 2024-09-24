@@ -448,6 +448,27 @@
       <tokenizer name="whitespace"/>
     </analyzer>
   </fieldType>
+
+  <fieldType name="tagged_text_general" class="solr.TextField" positionIncrementGap="100">
+    <analyzer type="index">
+      <!-- U+00AD is the "soft hyphen" character -->
+      <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="(\S+)\|([\w,]+)\x{00AD}\s+(\S+)\|([\w,]+)" replacement="$1$3|$2+$4"/>
+      <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+      <filter class="solr.DelimitedPayloadTokenFilterFactory" encoder="identity"/>
+      <filter class="solr.PatternReplaceFilterFactory" pattern="\p{Punct}*$" replacement=""/>
+      <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_en.txt" />
+      <filter class="solr.LowerCaseFilterFactory"/>
+      <filter class="solr.PorterStemFilterFactory"/>
+    </analyzer>
+    <analyzer type="query">
+      <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+      <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_en.txt" />
+      <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+      <filter class="solr.PorterStemFilterFactory"/>
+    </analyzer>
+  </fieldType>
+
   <field name="_nest_path_" type="_nest_path_"/>
   <field name="_root_" type="string" docValues="false" indexed="true" stored="false"/>
   <field name="_text_" type="text_general" multiValued="true" indexed="true" stored="false"/>
@@ -529,4 +550,6 @@
   <dynamicField name="*__dt_is_uncertain_and_approximate" type="boolean" indexed="true" stored="true"/>
 
   <dynamicField name="*__facet" type="strings" indexed="true" stored="true"/>
+
+  <dynamicField name="*__dps_txt" type="tagged_text_general" indexed="true" stored="true"/>
 </schema>
