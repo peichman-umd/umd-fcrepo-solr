@@ -529,13 +529,13 @@
   <dynamicField name="*__txt" type="text_general" multiValued="false" indexed="true" stored="true"/>
   <dynamicField name="*__int" type="plong" indexed="true" stored="true"/>
   <dynamicField name="*__uri" type="string" indexed="true" stored="true"/>
-  <dynamicField name="*__ids" type="string" indexed="true" stored="true"/>
+  <dynamicField name="*__ids" type="strings" indexed="true" stored="true"/>
   <dynamicField name="*__dts" type="daterange" multiValued="true" indexed="true" stored="true"/>
   <dynamicField name="*_srpt" type="location_rpt" indexed="true" stored="true"/>
   <dynamicField name="attr_*" type="text_general" multiValued="true" indexed="true" stored="true"/>
   <dynamicField name="*__id" type="string" indexed="true" stored="true"/>
   <dynamicField name="*__dt" type="daterange" indexed="true" stored="true"/>
-  <dynamicField name="*_str" type="strings" docValues="true" indexed="false" stored="false" useDocValuesAsStored="false"/>
+  <dynamicField name="*__str" type="string" indexed="true" stored="true"/>
   <dynamicField name="*_dpf" type="delimited_payloads_float" indexed="true" stored="true"/>
   <dynamicField name="*_dpi" type="delimited_payloads_int" indexed="true" stored="true"/>
   <dynamicField name="*_dps" type="delimited_payloads_string" indexed="true" stored="true"/>
