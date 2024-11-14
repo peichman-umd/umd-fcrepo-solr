@@ -507,6 +507,7 @@
   <dynamicField name="*__txt_id" type="text_id" indexed="true" stored="true"/>
   <dynamicField name="*__txt_it" type="text_it" indexed="true" stored="true"/>
   <dynamicField name="*__txt_ja" type="text_ja" indexed="true" stored="true"/>
+  <dynamicField name="*__txt_ja_latn" type="text_ja" indexed="true" stored="true"/>
   <dynamicField name="*__txt_ko" type="text_ko" indexed="true" stored="true"/>
   <dynamicField name="*__txt_lv" type="text_lv" indexed="true" stored="true"/>
   <dynamicField name="*__txt_nl" type="text_nl" indexed="true" stored="true"/>
