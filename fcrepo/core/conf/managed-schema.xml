@@ -544,7 +544,6 @@
   <dynamicField name="*_p" type="location" indexed="true" stored="true"/>
 
   <dynamicField name="is_*" type="boolean" indexed="true" stored="true"/>
-  <dynamicField name="*__sequence" type="strings" indexed="true" stored="true"/>
 
   <dynamicField name="*__dt_is_uncertain" type="boolean" indexed="true" stored="true"/>
   <dynamicField name="*__dt_is_approximate" type="boolean" indexed="true" stored="true"/>
