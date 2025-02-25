@@ -15,9 +15,9 @@ version 7.7.3.
 
 ### Volumes
 
-| Mount point   | Purpose              |
-|---------------|----------------------|
-| /var/opt/solr | Persistent core data |
+| Mount point     | Purpose              |
+|-----------------|----------------------|
+| `/var/opt/solr` | Persistent core data |
 
 ### Ports
 
@@ -36,13 +36,13 @@ cd umd-fcrepo-solr/fedora4
 
 Build the image:
 
-```bash
+```zsh
 docker build -t docker.lib.umd.edu/fcrepo-solr-fedora4 .
 ```
 
 ### Run
 
-```bash
+```zsh
 docker run -it --rm --name fcrepo-solr-fedora4 \
     -p 8983:8983 \
     docker.lib.umd.edu/fcrepo-solr-fedora4
@@ -52,33 +52,6 @@ The Solr web admin console will be at <http://localhost:8983/solr/#/>
 
 The Java heap size can be controlled by setting the environment variable
 `SOLR_FEDORA4_HEAP_SIZE`. The default if it is not set is `1024m`.
-
-## Testing
-
-This repository has a Python [pytest] test suite for testing.
-
-### Installing
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-### Running
-
-The tests require a running instance of this Solr image. By default,
-it assumes that the endpoint URL is <http://localhost:8983/solr/fedora4>.
-This can be changed by setting the environment variable `SOLR_ENDPOINT`.
-
-```bash
-# run tests with the default endpoint
-pytest
-
-# run with a custom endpoint (e.g., a different port)
-export SOLR_ENDPOINT=http://localhost:18983/solr/fedora4
-pytest
-```
 
 ## History
 

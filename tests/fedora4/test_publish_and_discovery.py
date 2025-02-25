@@ -1,8 +1,11 @@
 import pytest
 
+pytestmark = pytest.mark.fedora4
+
 published_type = 'http://vocab.lib.umd.edu/access#Published'
 top_level_type = 'http://vocab.lib.umd.edu/model#Item'
 hidden_type = 'http://vocab.lib.umd.edu/access#Hidden'
+
 
 @pytest.mark.parametrize(
     ('rdf_types', 'is_published', 'is_top_level', 'is_hidden', 'is_discoverable'),
