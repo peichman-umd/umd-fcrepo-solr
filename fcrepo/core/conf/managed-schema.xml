@@ -279,12 +279,14 @@
       <tokenizer name="standard"/>
       <filter words="stopwords.txt" ignoreCase="true" name="stop"/>
       <filter name="lowercase"/>
+      <filter name="porterStem"/>
     </analyzer>
     <analyzer type="query">
       <tokenizer name="standard"/>
       <filter words="stopwords.txt" ignoreCase="true" name="stop"/>
       <filter synonyms="synonyms.txt" ignoreCase="true" expand="true" name="synonymGraph"/>
       <filter name="lowercase"/>
+      <filter name="porterStem"/>
     </analyzer>
   </fieldType>
   <fieldType name="text_general_rev" class="solr.TextField" positionIncrementGap="100">
@@ -552,4 +554,8 @@
   <dynamicField name="*__facet" type="strings" indexed="true" stored="true"/>
 
   <dynamicField name="*__dps_txt" type="tagged_text_general" indexed="true" stored="true"/>
+
+  <!-- fields that group other fields together for searching -->
+  <field name="text" type="text_general" multiValued="true" indexed="true" stored="false"/>
+  <field name="identifier" type="strings" multiValued="true" indexed="true" stored="false"/>
 </schema>
