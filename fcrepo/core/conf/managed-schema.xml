@@ -552,6 +552,7 @@
   <dynamicField name="*__dt_is_uncertain_and_approximate" type="boolean" indexed="true" stored="true"/>
 
   <dynamicField name="*__facet" type="strings" indexed="true" stored="true"/>
+  <dynamicField name="*__display" type="strings" indexed="false" stored="true"/>
 
   <dynamicField name="*__dps_txt" type="tagged_text_general" indexed="true" stored="true"/>
 
