@@ -1,4 +1,3 @@
-import os
 from uuid import uuid4
 
 import pytest
@@ -6,12 +5,8 @@ from pysolr import Solr
 
 
 @pytest.fixture()
-def solr_endpoint():
-    return os.environ.get('SOLR_ENDPOINT', 'http://localhost:8983/solr/fedora4')
-
-
-@pytest.fixture()
 def solr(solr_endpoint):
+    # solr_endpoint should be defined in a per-core conftest.py file
     return Solr(solr_endpoint)
 
 
@@ -27,9 +22,10 @@ def index(solr):
     def _index(fields):
         uuid = str(uuid4())
         uuids.append(uuid)
-        solr.add([{'id': uuid, **fields}])
+        doc = {'id': uuid, **fields}
+        solr.add([doc])
         solr.commit()
-        return solr.search(f'id:{uuid}').docs[0]
+        return solr.search('{!term f=id v=$uuid}', uuid=doc['id']).docs[0]
 
     yield _index
 

@@ -1,5 +1,7 @@
 import pytest
 
+pytestmark = pytest.mark.fedora4
+
 
 @pytest.mark.parametrize(
     ('input_date', 'output_date'),
