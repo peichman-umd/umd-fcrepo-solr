@@ -650,41 +650,16 @@
   <requestHandler name="/select" class="solr.SearchHandler">
     <lst name="defaults">
       <str name="echoParams">explicit</str>
+      <!-- search all fields by default -->
+      <str name="q">*:*</str>
+      <!-- default to 10 results per page -->
       <int name="rows">10</int>
       <!-- include child documents as nested fields by default -->
       <str name="fl">*,[child]</str>
       <!-- exclude child documents from being top-level results -->
       <str name="fq">!_nest_path_:*</str>
-    </lst>
-  </requestHandler>
-
-  <!-- Search handler for Faceting -->
-  <requestHandler name="/facet" class="solr.SearchHandler" >
-    <lst name="defaults">
-      <str name="defType">dismax</str>
-      <str name="echoParams">explicit</str>
-
-      <str name="facet">on</str>
+      <!-- default to facet minimum of 1 -->
       <str name="facet.mincount">1</str>
-      <str name="facet.limit">10</str>
-
-      <str name="df">text</str>
-      <str name="q.alt">*:*</str>
-    </lst>
-  </requestHandler>
-
-  <!-- Search handler for finding metadata of all fields -->
-  <requestHandler name="/search" class="solr.SearchHandler" >
-    <lst name="defaults">
-      <str name="defType">dismax</str>
-      <str name="echoParams">explicit</str>
-
-      <str name="facet">on</str>
-      <str name="facet.mincount">1</str>
-      <str name="facet.limit">10</str>
-
-      <str name="df">text</str>
-      <str name="q.alt">*:*</str>
     </lst>
   </requestHandler>
 
