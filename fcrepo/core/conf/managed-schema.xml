@@ -485,9 +485,10 @@
   <dynamicField name="*__txt_cjk" type="text_cjk" indexed="true" stored="true"/>
   <dynamicField name="*__curies" type="strings" indexed="true" stored="true"/>
   <dynamicField name="ignored_*" type="ignored"/>
-  <dynamicField name="*__txt_en" type="text_en" indexed="true" stored="true"/>
   <dynamicField name="*_phon_en" type="phonetic_en" indexed="true" stored="true"/>
   <dynamicField name="*_s_lower" type="lowercase" indexed="true" stored="true"/>
+
+  <!-- language-tagged text with language-specific analysis -->
   <dynamicField name="*__txt_ar" type="text_ar" indexed="true" stored="true"/>
   <dynamicField name="*__txt_bg" type="text_bg" indexed="true" stored="true"/>
   <dynamicField name="*__txt_ca" type="text_ca" indexed="true" stored="true"/>
@@ -495,6 +496,7 @@
   <dynamicField name="*__txt_da" type="text_da" indexed="true" stored="true"/>
   <dynamicField name="*__txt_de" type="text_de" indexed="true" stored="true"/>
   <dynamicField name="*__txt_el" type="text_el" indexed="true" stored="true"/>
+  <dynamicField name="*__txt_en" type="text_en" indexed="true" stored="true"/>
   <dynamicField name="*__txt_es" type="text_es" indexed="true" stored="true"/>
   <dynamicField name="*__txt_et" type="text_et" indexed="true" stored="true"/>
   <dynamicField name="*__txt_eu" type="text_eu" indexed="true" stored="true"/>
@@ -520,6 +522,42 @@
   <dynamicField name="*__txt_sv" type="text_sv" indexed="true" stored="true"/>
   <dynamicField name="*__txt_th" type="text_th" indexed="true" stored="true"/>
   <dynamicField name="*__txt_tr" type="text_tr" indexed="true" stored="true"/>
+
+  <!-- multivalued language-tagged text with language-specific analysis -->
+  <dynamicField name="*__txts_ar" type="text_ar" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_bg" type="text_bg" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_ca" type="text_ca" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_cz" type="text_cz" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_da" type="text_da" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_de" type="text_de" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_el" type="text_el" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_en" type="text_en" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_es" type="text_es" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_et" type="text_et" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_eu" type="text_eu" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_fa" type="text_fa" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_fi" type="text_fi" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_fr" type="text_fr" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_ga" type="text_ga" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_gl" type="text_gl" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_hi" type="text_hi" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_hu" type="text_hu" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_hy" type="text_hy" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_id" type="text_id" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_it" type="text_it" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_ja" type="text_ja" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_ja_latn" type="text_ja" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_ko" type="text_ko" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_lv" type="text_lv" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_nl" type="text_nl" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_no" type="text_no" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_pt" type="text_pt" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_ro" type="text_ro" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_ru" type="text_ru" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_sv" type="text_sv" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_th" type="text_th" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*__txts_tr" type="text_tr" indexed="true" stored="true" multiValued="true"/>
+
   <dynamicField name="*__curie" type="string" indexed="true" stored="true"/>
   <dynamicField name="*__edtfs" type="strings" indexed="true" stored="true"/>
   <dynamicField name="random_*" type="random"/>
