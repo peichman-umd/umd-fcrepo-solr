@@ -476,17 +476,39 @@
   <field name="_text_" type="text_general" multiValued="true" indexed="true" stored="false"/>
   <field name="_version_" type="plong" indexed="false" stored="false"/>
   <field name="id" type="string" multiValued="false" indexed="true" required="true" stored="true"/>
-  <dynamicField name="*__txt_en_split_tight" type="text_en_splitting_tight" indexed="true" stored="true"/>
-  <dynamicField name="*_descendent_path" type="descendent_path" indexed="true" stored="true"/>
-  <dynamicField name="*__txt_en_split" type="text_en_splitting" indexed="true" stored="true"/>
-  <dynamicField name="*_ancestor_path" type="ancestor_path" indexed="true" stored="true"/>
-  <dynamicField name="*__txt_sort" type="text_gen_sort" indexed="true" stored="true"/>
-  <dynamicField name="*__txt_rev" type="text_general_rev" indexed="true" stored="true"/>
-  <dynamicField name="*__txt_cjk" type="text_cjk" indexed="true" stored="true"/>
+
+  <!-- data-typed fields -->
+  <dynamicField name="*__curie" type="string" indexed="true" stored="true"/>
   <dynamicField name="*__curies" type="strings" indexed="true" stored="true"/>
-  <dynamicField name="ignored_*" type="ignored"/>
-  <dynamicField name="*_phon_en" type="phonetic_en" indexed="true" stored="true"/>
-  <dynamicField name="*_s_lower" type="lowercase" indexed="true" stored="true"/>
+  <dynamicField name="*__dt" type="daterange" indexed="true" stored="true"/>
+  <dynamicField name="*__dts" type="daterange" multiValued="true" indexed="true" stored="true"/>
+  <dynamicField name="*__edtf" type="string" indexed="true" stored="true"/>
+  <dynamicField name="*__edtfs" type="strings" indexed="true" stored="true"/>
+  <dynamicField name="*__id" type="string" indexed="true" stored="true"/>
+  <dynamicField name="*__ids" type="strings" indexed="true" stored="true"/>
+  <dynamicField name="*__int" type="plong" indexed="true" stored="true"/>
+  <dynamicField name="*__ints" type="plongs" indexed="true" stored="true"/>
+  <dynamicField name="*__str" type="string" indexed="true" stored="true"/>
+  <dynamicField name="*__txt" type="text_general" multiValued="false" indexed="true" stored="true"/>
+  <dynamicField name="*__txts" type="text_general" indexed="true" stored="true"/>
+  <dynamicField name="*__uri" type="string" indexed="true" stored="true"/>
+  <dynamicField name="*__uris" type="strings" indexed="true" stored="true"/>
+
+  <dynamicField name="is_*" type="boolean" indexed="true" stored="true"/>
+
+  <dynamicField name="*__dt_is_uncertain" type="boolean" indexed="true" stored="true"/>
+  <dynamicField name="*__dt_is_approximate" type="boolean" indexed="true" stored="true"/>
+  <dynamicField name="*__dt_is_uncertain_and_approximate" type="boolean" indexed="true" stored="true"/>
+
+  <dynamicField name="*__facet" type="strings" indexed="true" stored="true"/>
+  <dynamicField name="*__display" type="strings" indexed="false" stored="true"/>
+
+  <!-- for use with OCR text containing bounding box tags -->
+  <dynamicField name="*__dps_txt" type="tagged_text_general" indexed="true" stored="true"/>
+
+  <!-- fields that group other fields together for searching -->
+  <field name="text" type="text_general" multiValued="true" indexed="true" stored="false"/>
+  <field name="identifier" type="strings" multiValued="true" indexed="true" stored="false"/>
 
   <!-- language-tagged text with language-specific analysis -->
   <dynamicField name="*__txt_ar" type="text_ar" indexed="true" stored="true"/>
@@ -558,43 +580,25 @@
   <dynamicField name="*__txts_th" type="text_th" indexed="true" stored="true" multiValued="true"/>
   <dynamicField name="*__txts_tr" type="text_tr" indexed="true" stored="true" multiValued="true"/>
 
-  <dynamicField name="*__curie" type="string" indexed="true" stored="true"/>
-  <dynamicField name="*__edtfs" type="strings" indexed="true" stored="true"/>
+  <!-- Solr defaults; TODO: determine if we use any of these -->
+  <dynamicField name="*__txt_en_split_tight" type="text_en_splitting_tight" indexed="true" stored="true"/>
+  <dynamicField name="*_descendent_path" type="descendent_path" indexed="true" stored="true"/>
+  <dynamicField name="*__txt_en_split" type="text_en_splitting" indexed="true" stored="true"/>
+  <dynamicField name="*_ancestor_path" type="ancestor_path" indexed="true" stored="true"/>
+  <dynamicField name="*__txt_sort" type="text_gen_sort" indexed="true" stored="true"/>
+  <dynamicField name="*__txt_rev" type="text_general_rev" indexed="true" stored="true"/>
+  <dynamicField name="*__txt_cjk" type="text_cjk" indexed="true" stored="true"/>
+  <dynamicField name="ignored_*" type="ignored"/>
+  <dynamicField name="*_phon_en" type="phonetic_en" indexed="true" stored="true"/>
+  <dynamicField name="*_s_lower" type="lowercase" indexed="true" stored="true"/>
   <dynamicField name="random_*" type="random"/>
   <dynamicField name="*_t_sort" type="text_gen_sort" multiValued="false" indexed="true" stored="true"/>
-  <dynamicField name="*__edtf" type="string" indexed="true" stored="true"/>
-  <dynamicField name="*__txts" type="text_general" indexed="true" stored="true"/>
-  <dynamicField name="*__ints" type="plongs" indexed="true" stored="true"/>
-  <dynamicField name="*__uris" type="strings" indexed="true" stored="true"/>
   <dynamicField name="*_point" type="point" indexed="true" stored="true"/>
-  <dynamicField name="*__txt" type="text_general" multiValued="false" indexed="true" stored="true"/>
-  <dynamicField name="*__int" type="plong" indexed="true" stored="true"/>
-  <dynamicField name="*__uri" type="string" indexed="true" stored="true"/>
-  <dynamicField name="*__ids" type="strings" indexed="true" stored="true"/>
-  <dynamicField name="*__dts" type="daterange" multiValued="true" indexed="true" stored="true"/>
   <dynamicField name="*_srpt" type="location_rpt" indexed="true" stored="true"/>
   <dynamicField name="attr_*" type="text_general" multiValued="true" indexed="true" stored="true"/>
-  <dynamicField name="*__id" type="string" indexed="true" stored="true"/>
-  <dynamicField name="*__dt" type="daterange" indexed="true" stored="true"/>
-  <dynamicField name="*__str" type="string" indexed="true" stored="true"/>
   <dynamicField name="*_dpf" type="delimited_payloads_float" indexed="true" stored="true"/>
   <dynamicField name="*_dpi" type="delimited_payloads_int" indexed="true" stored="true"/>
   <dynamicField name="*_dps" type="delimited_payloads_string" indexed="true" stored="true"/>
   <dynamicField name="*_ws" type="text_ws" indexed="true" stored="true"/>
   <dynamicField name="*_p" type="location" indexed="true" stored="true"/>
-
-  <dynamicField name="is_*" type="boolean" indexed="true" stored="true"/>
-
-  <dynamicField name="*__dt_is_uncertain" type="boolean" indexed="true" stored="true"/>
-  <dynamicField name="*__dt_is_approximate" type="boolean" indexed="true" stored="true"/>
-  <dynamicField name="*__dt_is_uncertain_and_approximate" type="boolean" indexed="true" stored="true"/>
-
-  <dynamicField name="*__facet" type="strings" indexed="true" stored="true"/>
-  <dynamicField name="*__display" type="strings" indexed="false" stored="true"/>
-
-  <dynamicField name="*__dps_txt" type="tagged_text_general" indexed="true" stored="true"/>
-
-  <!-- fields that group other fields together for searching -->
-  <field name="text" type="text_general" multiValued="true" indexed="true" stored="false"/>
-  <field name="identifier" type="strings" multiValued="true" indexed="true" stored="false"/>
 </schema>
