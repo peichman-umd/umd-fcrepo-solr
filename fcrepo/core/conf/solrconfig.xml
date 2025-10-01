@@ -650,11 +650,16 @@
   <requestHandler name="/select" class="solr.SearchHandler">
     <lst name="defaults">
       <str name="echoParams">explicit</str>
+      <!-- search all fields by default -->
+      <str name="q">*:*</str>
+      <!-- default to 10 results per page -->
       <int name="rows">10</int>
       <!-- include child documents as nested fields by default -->
       <str name="fl">*,[child]</str>
       <!-- exclude child documents from being top-level results -->
       <str name="fq">!_nest_path_:*</str>
+      <!-- default to facet minimum of 1 -->
+      <str name="facet.mincount">1</str>
     </lst>
   </requestHandler>
 
