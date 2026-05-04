@@ -1,5 +1,7 @@
 import pytest
 
+pytestmark = pytest.mark.fcrepo
+
 
 @pytest.mark.parametrize(
     ('input_text', 'search_term'),
