@@ -1,13 +1,13 @@
 from uuid import uuid4
 
+import pysolr
 import pytest
-from pysolr import Solr
 
 
 @pytest.fixture()
-def solr(solr_endpoint):
+def solr(solr_endpoint) -> pysolr.Solr:
     # solr_endpoint should be defined in a per-core conftest.py file
-    return Solr(solr_endpoint)
+    return pysolr.Solr(solr_endpoint)
 
 
 @pytest.fixture
@@ -32,3 +32,16 @@ def index(solr):
     # clean up after ourselves
     solr.delete(id=uuids)
     solr.commit()
+
+
+@pytest.fixture
+def doc_in_results():
+    def _doc_in_results(doc_id: str, results: pysolr.Results):
+
+        for doc in results:
+            if doc.get('id') == doc_id:
+                return doc
+        else:
+            return None
+
+    return _doc_in_results
