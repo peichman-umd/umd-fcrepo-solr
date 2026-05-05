@@ -457,7 +457,10 @@
       <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="(\S+)\|([\w,]+)\x{00AD}\s+(\S+)\|([\w,]+)" replacement="$1$3|$2+$4"/>
       <tokenizer class="solr.WhitespaceTokenizerFactory"/>
       <filter class="solr.DelimitedPayloadTokenFilterFactory" encoder="identity"/>
-      <filter class="solr.PatternReplaceFilterFactory" pattern="\p{Punct}*$" replacement=""/>
+      <!-- strip leading punctuation (Unicode general category "Punctuation/P") -->
+      <filter class="solr.PatternReplaceFilterFactory" pattern="^\p{P}*" replacement=""/>
+      <!-- strip trailing punctuation (Unicode general category "Punctuation/P") -->
+      <filter class="solr.PatternReplaceFilterFactory" pattern="\p{P}*$" replacement=""/>
       <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_en.txt" />
       <filter class="solr.LowerCaseFilterFactory"/>
       <filter class="solr.PorterStemFilterFactory"/>
